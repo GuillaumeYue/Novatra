@@ -1,14 +1,6 @@
 /* 背景视频铺满 */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-}
-.bg {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
+.hero { position: relative; min-height: 100vh; overflow: hidden; }
+.bg   { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* 白色卡片（略小于全屏） */
 .card {
@@ -19,30 +11,53 @@
   z-index: 1;
 
   display: flex;
-  /* 主轴水平：让内容在水平方向居中 */
   justify-content: center;
-  /* 交叉轴垂直：把内容压到卡片底部 */
   align-items: flex-end;
-
-  padding: 40px;
-  padding-bottom: 5px; /* 底部留点呼吸空间，可调 */
+  padding: 40px 40px 5px;
+  overflow: hidden;        /* 保证内部圆角一致 */
+    /* 新增：控制 logo 掩膜的统一尺寸（越小 logo 越小） */
+  --logo-size: 66%;
 }
 
-.title {
-  margin-bottom: 10px;       /* 调整抬高的距离 */
+/* 中间那层矩形视频（比卡片小一些） */
+.inner-video {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 86%;              /* 调整你想要的缩放比例 */
+  height: 86%;
+  object-fit: cover;
+  border-radius: 20px;     /* 比卡片稍小的圆角 */
+  z-index: 1;              /* 在白卡之上、遮罩视频之下 */
+  box-shadow: 0 10px 24px rgba(0,0,0,.16); /* 可选立体感 */
 }
 
-.title p {
-  margin: 0;
-  font-size: inherit; /* 继承统一字号 */
-  font-weight: normal;
-  color: #666;        /* 默认灰色 */
+/* 最上层：被遮罩的视频（镂空） */
+.logo-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;              /* 压在 inner-video 之上 */
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,.18)); /* 边缘更柔和 */
+  -webkit-mask-size: var(--logo-size) auto !important;
+  mask-size: var(--logo-size) auto !important;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
-.title .highlight {
-  font-weight: 700;        /* 粗体 */
-  color: #000;             /* 黑色 */
+/* 文案在最上层 */
+.title { position: relative; z-index: 3; margin-bottom: 15px; }
+.title p { margin: 0; color: #666; }
+.title .highlight { font-weight: 700; color: #000; }
+
+@media (max-width: 900px){
+  .card { --logo-size: 74%; }
 }
-
-
-
+@media (max-width: 600px){
+  .card { --logo-size: 80%; }
+}
