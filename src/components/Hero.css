@@ -1,63 +1,26 @@
-/* 背景视频铺满 */
 .hero { position: relative; min-height: 100vh; overflow: hidden; }
-.bg   { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bg { position: absolute; inset: 0; object-fit: cover; z-index: 0; }
 
-/* 白色卡片（略小于全屏） */
 .card {
-  position: absolute;
-  inset: 6vh 3vw;
-  background: #fff;
-  border-radius: 24px;
-  z-index: 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 40px 40px 5px;
-  overflow: hidden;        /* 保证内部圆角一致 */
-    /* 新增：控制 logo 掩膜的统一尺寸（越小 logo 越小） */
-  --logo-size: 66%;
+  position: absolute; inset: 60px; background: #fff; border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.12); z-index: 1;
+  display: grid; place-items: end center; padding-bottom: 28px;
 }
 
-/* 中间那层矩形视频（比卡片小一些） */
-.inner-video {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 86%;              /* 调整你想要的缩放比例 */
-  height: 86%;
-  object-fit: cover;
-  border-radius: 20px;     /* 比卡片稍小的圆角 */
-  z-index: 1;              /* 在白卡之上、遮罩视频之下 */
-  box-shadow: 0 10px 24px rgba(0,0,0,.16); /* 可选立体感 */
-}
-
-/* 最上层：被遮罩的视频（镂空） */
 .logo-video {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+  position: absolute; z-index: 2;
+  /* 让小视频与卡片对齐居中，自行按设计调宽高 */
+  width:  calc(min(70vw, 900px) - 24px);
+  aspect-ratio: 16/6;      /* 先占个比，方便摆位 */
+  left: 50%; top: 45%; transform: translate(-50%, -50%);
   object-fit: cover;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 2;              /* 压在 inner-video 之上 */
-  filter: drop-shadow(0 10px 24px rgba(0,0,0,.18)); /* 边缘更柔和 */
-  -webkit-mask-size: var(--logo-size) auto !important;
-  mask-size: var(--logo-size) auto !important;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
 }
 
-/* 文案在最上层 */
-.title { position: relative; z-index: 3; margin-bottom: 15px; }
-.title p { margin: 0; color: #666; }
-.title .highlight { font-weight: 700; color: #000; }
-
-@media (max-width: 900px){
-  .card { --logo-size: 74%; }
-}
-@media (max-width: 600px){
-  .card { --logo-size: 80%; }
+.mask-overlay {
+  position: absolute; z-index: 3; pointer-events: none;
+  /* 与 logo-video 同尺寸/同位置，便于描边或投影 */
+  width: min(70vw, 900px);
+  aspect-ratio: 16/6;
+  left: 50%; top: 45%; transform: translate(-50%, -50%);
+  /* 需要描边/阴影可加：filter: drop-shadow(0 8px 20px rgba(0,0,0,.25)); */
 }
