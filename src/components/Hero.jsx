@@ -1,30 +1,34 @@
-import "./Hero.css";
-import bgVideo from "./assets/novatra-bg.mp4";
-import maskPng from "./assets/masks/logo-cutout-new.png";
+import React from "react";
 
 export default function Hero() {
   return (
-    <section className="hero">
-      <video className="bg" src={bgVideo} autoPlay muted loop playsInline />
-
-      <div className="card">
-        <div className="title">
-          <p>
-            WE ARE <span className="highlight">NOVATRA STUDIO</span>. WE DESIGN
-            AND DEVELOP WEBSITES.
-          </p>
-        </div>
-      </div>
+    <section className="section-container hero">
       <video
-        className="logo-video"
-        src={bgVideo}
+        className="hero-video"
         autoPlay
         muted
         loop
         playsInline
-        aria-hidden="true"
-      />
-      <img className="mask-overlay" src={maskPng} alt="" aria-hidden="true" />
+        poster="/assets/img/fallback.png"
+      >
+        <source src="/assets/novatra-bg.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div className="hero-content-container">
+        <div className="hero-fill-top" />
+        <img
+          className="hero-title"
+          src="/assets/img/titleHollowingOut.png"
+          alt="title"
+        />
+        <div className="hero-fill">
+          <p className="hero-text">
+            we are <span className="hero-text-strong">novatra studio</span>. we
+            design and develop websites.
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
