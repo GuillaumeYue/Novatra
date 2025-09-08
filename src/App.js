@@ -34,8 +34,13 @@ export default function App() {
           <Contact />
         </div>
       </main>
-
+    
       <Footer />
     </>
   );
 }
+//header固定 1
+//顺滑滚动 1
+//hover效果
+//插入链接 tartget= "_blank"
+//portfolio+viewall

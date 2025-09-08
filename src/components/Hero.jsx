@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <section className="section-container hero">
+    <section id="hero" className="section-container hero">
       <video
         className="hero-video"
         autoPlay

@@ -1,16 +1,17 @@
 import React from "react";
 
 export default function Header() {
+  
   return (
     <section className="header">
-      <p className="logo">novatra</p>
+      <a href="#hero" className="logo">novatra</a>
 
       <div className="glass nav-container">
-        <a href="#" className="nav-link">about</a>
+        <a href="#about" className="nav-link">about</a>
         <span className="nav-line" />
-        <a href="#" className="nav-link">portfolio</a>
+        <a href="#portfolio" className="nav-link">portfolio</a>
         <span className="nav-line" />
-        <a href="#" className="nav-link">service</a>
+        <a href="#service" className="nav-link">service</a>
       </div>
 
       <a href="#contact-form" className="header-contact">

@@ -10,7 +10,7 @@ const works = [
 
 export default function Portfolio() {
   return (
-    <section className="section-container portfolio">
+    <section id="portfolio" className="section-container portfolio">
       <div className="portfolio-card-container">
         {works.map((w, i) => (
           <Card key={i} imgSrc={w.img} name={w.name} />

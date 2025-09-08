@@ -9,7 +9,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="section-container services">
+    <section id="service" className="section-container services">
       {services.map((s, i) => (
         <ServiceCard key={i} title={s.title} details={s.details} />
       ))}

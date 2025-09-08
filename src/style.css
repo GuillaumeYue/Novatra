@@ -9,6 +9,7 @@
 - SPACING SYSTEM (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
  */
+ 
 
 * {
   padding: 0;
@@ -59,22 +60,31 @@ body {
 }
 
 .main {
-  background-color: #fff;
-  border-radius: 1.6rem;
-  z-index: 100;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
+  position: relative;         /* 保持流式，先不动 footer 的定位 */
+  width: 100%;                 
   margin: 0 auto;
+  background: #fff;
+  border-radius: 1.6rem;
+  overflow: hidden;             /* 在白框内滚动 */
+
+  /* 限制最大高度为一屏，减去 body 的上下内边距(2.4rem*2) */
+  max-height: calc(100vh - 4.8rem);
+
+  /* 避免滚轮直接串到外层（更像一个独立画布） */
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
   padding: 1.8rem 3.2rem;
 }
 
 .main-container {
-  position: relative;
+  max-height: inherit;           /* 继承上面的相框高度 */
+  overflow-y: auto;              /* 内层滚动，不影响圆角 */
+  -webkit-overflow-scrolling: touch;
+  padding: 4rem 1.8rem 1.8rem 3.2rem;
+  scroll-behavior: smooth;
   /* height: 200rem; */
 }
+
 
 .header {
   position: sticky;
@@ -86,6 +96,23 @@ body {
   height: 3.2rem;
   z-index: 10000;
 }
+
+/* 不让 Header 里的链接在访问后变色 */
+.header .logo:link,
+.header .logo:visited,
+.header .nav-link:link,
+.header .nav-link:visited,
+.header .header-contact:link,
+.header .header-contact:visited {
+  color: inherit;         /* 跟随原本颜色 */
+  text-decoration: none;
+}
+
+/* 可选：去掉移动端点击时的灰色高亮 */
+.header a { -webkit-tap-highlight-color: transparent; }
+
+/* 你已有的 hover/active 样式可继续保留；顺序放在这些规则后面也没问题 */
+
 
 .logo {
   position: absolute;
@@ -335,6 +362,7 @@ body {
   transform: rotate(45deg);
 }
 
+
 /* *****************************
 *     SERVICES SECTION        *
 ***************************** */
@@ -567,3 +595,37 @@ body {
   font-size: 1.2rem;
 }
 
+/* === Header 简易交互态（hover / active / focus）=== */
+/* 仅交互态：不改默认样式 */
+
+/* — 导航文字 — */
+.nav-link { position: relative; transition: color .18s ease, transform .12s ease; }
+.nav-link:hover { color: #1f2a36; }                 /* 轻微变深 */
+.nav-link:active { transform: translateY(1px); }    /* 点击轻压 */
+
+/* 下划线只在 hover/focus 时出现，不影响布局 */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -0.35rem;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  opacity: 0;
+  transform-origin: center;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after { transform: scaleX(1); opacity: .9; }
+
+/* — 右侧 CONTACT 胶囊按钮 — */
+.header-contact { transition: box-shadow .2s ease, transform .12s ease; }
+.header-contact:hover { box-shadow: 0 10px 22px rgba(0,0,0,.10); transform: translateY(-1px); }
+.header-contact:active { box-shadow: 0 6px 14px rgba(0,0,0,.12); transform: translateY(0); }
+
+/* 邮件图标略微放大（仅在父级 hover 时） */
+.header-contact:hover .contact-icon { transform: scale(1.05); transition: transform .12s ease; }
+
+/* 键盘可达性（仅在 focus-visible 时显示，不影响默认态） */
+.nav-link:focus-visible,
+.header-contact:focus-visible { outline: 2px solid rgba(56,107,180,.45); outline-offset: 2px; border-radius: 999px; }
