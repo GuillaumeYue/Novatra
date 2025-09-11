@@ -43,7 +43,8 @@ body {
 
 .section-container {
   width: 90%;
-  height: 65rem;
+  min-height: 65rem;
+  height: auto;
   justify-self: center;
   margin-bottom: 12.8rem;
   /* border: 1px solid black; */
@@ -283,9 +284,10 @@ body {
 
 .portfolio {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  height: 100rem;
+  height: auto;
+  flex-direction: column;
 }
 
 .portfolio-card-container {
@@ -361,6 +363,22 @@ body {
   font-weight: 100;
   transform: rotate(45deg);
 }
+
+.portfolio-viewmore {
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* 居中 */
+  margin-top: 2rem;         /* 和卡片区留距 */
+}
+
+.viewmore-btn {
+  padding: 1rem 3rem;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}
+
 
 
 /* *****************************
@@ -520,6 +538,18 @@ body {
   background-color: #fafdff;
   border: 2px solid #9299a0;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* hover：背景色稍微加深 */
+.contact-submit-btn:hover {
+  background-color: #e0e7ef;
+}
+
+/* active：点击时更深，并轻微下压 */
+.contact-submit-btn:active {
+  background-color: #cbd5e1;
+  transform: scale(0.97);
 }
 
 /* *****************************
